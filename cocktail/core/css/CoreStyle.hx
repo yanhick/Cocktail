@@ -1242,6 +1242,7 @@ class CoreStyle
 					isLeftAligned = true;
 					
 				default:	
+					
 			}
 		}
 		

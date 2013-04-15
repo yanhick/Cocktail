@@ -1118,6 +1118,23 @@ class HTMLElement extends Element<HTMLElement>
 				}
 	
 				coreStyle.cascade(cascadeManager, _initialStyleDeclaration, styleManagerCSSDeclaration, style, parentStyleDeclaration, parentFontMetrics.fontSize, parentFontMetrics.xHeight, programmaticChange);
+				if (elementRenderer != null)
+				{
+					if (elementRenderer.isBlockContainer)
+					{
+						var child = elementRenderer.firstChild;
+						while (child != null)
+						{
+							if (child.isAnonymousBlockBox())
+							{
+								cascadeManager.shouldCascadeAll();
+								child.coreStyle.cascade(cascadeManager, _initialStyleDeclaration, _initialStyleDeclaration, _initialStyleDeclaration, parentStyleDeclaration, parentFontMetrics.fontSize, parentFontMetrics.xHeight, programmaticChange);
+							}
+							child = child.nextSibling;
+						}
+						
+					}
+				}
 			}
 		}
 		else

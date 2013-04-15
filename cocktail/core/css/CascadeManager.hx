@@ -250,6 +250,7 @@ class CascadeManager
 		{
 			//check wether the property is fon-size
 			case CSSConstants.FONT_SIZE:
+				trace("jjjjjjjjjjjjjj");
 				hasFontSize = true;
 				
 			case CSSConstants.MARGIN_TOP:

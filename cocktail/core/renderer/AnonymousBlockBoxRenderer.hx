@@ -33,15 +33,15 @@ class AnonymousBlockBoxRenderer extends BlockBoxRenderer
 	/**
 	 * class constructor
 	 */
-	public function new(document:Document) 
+	public function new(node:HTMLElement) 
 	{
 		//create dummy node first time
 		if (_node == null)
 		{
-			_node = document.createElement(HTMLConstants.HTML_DIV_TAG_NAME);
+			//_node = document.createElement(HTMLConstants.HTML_DIV_TAG_NAME);
 		}
 		
-		super(_node);
+		super(node);
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////

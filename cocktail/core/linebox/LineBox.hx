@@ -6,6 +6,8 @@ import cocktail.core.renderer.BlockBoxRenderer;
 import cocktail.core.renderer.ElementRenderer;
 import cocktail.core.font.FontData;
 import cocktail.core.geom.GeomData;
+import haxe.Firebug;
+import haxe.Stack;
 using cocktail.core.utils.Utils;
 import cocktail.core.css.CSSData;
 import cocktail.core.layout.LayoutData;
@@ -509,7 +511,12 @@ class LineBox
 					}
 					
 				default:
-					throw 'Illegal value for text-align style';
+					Firebug.redirectTraces();
+					trace(Stack.toString(Stack.callStack()));
+					trace("fuuuuuuuuuuuuck");
+					trace(_elementRenderer);
+					trace(_elementRenderer.parentNode);
+					//throw 'Illegal value for text-align style';
 			}
 		}
 		

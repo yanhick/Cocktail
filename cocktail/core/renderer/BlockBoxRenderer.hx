@@ -15,6 +15,7 @@ import cocktail.core.event.Event;
 import cocktail.core.event.UIEvent;
 import cocktail.core.event.WheelEvent;
 import cocktail.core.geom.GeomUtils;
+import cocktail.core.html.HTMLConstants;
 import cocktail.core.html.HTMLDocument;
 import cocktail.core.html.HTMLElement;
 import cocktail.core.linebox.LineBox;
@@ -280,22 +281,23 @@ class BlockBoxRenderer extends FlowBoxRenderer
 	 */ 
 	private function createAnonymousBlock(child:ElementRenderer):AnonymousBlockBoxRenderer
 	{
-		var anonymousBlock:AnonymousBlockBoxRenderer = new AnonymousBlockBoxRenderer(domNode.ownerDocument);
+		var node = domNode.ownerDocument.createElement(HTMLConstants.HTML_DIV_TAG_NAME);
+		var anonymousBlock:AnonymousBlockBoxRenderer = new AnonymousBlockBoxRenderer(node);
 		anonymousBlock.appendChild(child);
-		
-		anonymousBlock.coreStyle = anonymousBlock.domNode.coreStyle;
-		
+		anonymousBlock.coreStyle = new CoreStyle(node);
+		trace("new ano");
+		trace(domNode);
 		//TODO 3 : all of this is very messy but before that styles of anonymous blocks
 		//were cascaded which was very expensive and useless
-		var initialStyleDeclaration:InitialStyleDeclaration = InitialStyleDeclaration.getInstance();
-		anonymousBlock.coreStyle.specifiedValues = initialStyleDeclaration;
-		anonymousBlock.coreStyle.computedValues = initialStyleDeclaration.initialComputedStyleDeclaration;
-		anonymousBlock.coreStyle.applyHiddenBordersWidth();
-		anonymousBlock.coreStyle.applyNoneOutlineWidth();
+		//var initialStyleDeclaration:InitialStyleDeclaration = InitialStyleDeclaration.getInstance();
+		//anonymousBlock.coreStyle.specifiedValues = initialStyleDeclaration;
+		//anonymousBlock.coreStyle.computedValues = initialStyleDeclaration.initialComputedStyleDeclaration;
+		//anonymousBlock.coreStyle.applyHiddenBordersWidth();
+		//anonymousBlock.coreStyle.applyNoneOutlineWidth();
 		var htmlDocument:HTMLDocument = cast(domNode.ownerDocument);
 		anonymousBlock.coreStyle.updateCoreStyleAttribute(htmlDocument.cascadeManager, true);
-		anonymousBlock.coreStyle.setUsedLineHeight();
-		
+		//anonymousBlock.coreStyle.setUsedLineHeight();
+		//trace(anonymousBlock.coreStyle.fontSize);
 		return anonymousBlock;
 	}
 	
@@ -960,6 +962,10 @@ class BlockBoxRenderer extends FlowBoxRenderer
 						}
 					}
 					
+					if (child.isAnonymousBlockBox())
+					{
+						trace(child.getCollapsedBottomMargin());
+					}
 					//add the current's child height so that next block child will be placed below it
 					_childPosition.y += child.bounds.height;
 					//add child bottom margin, collapsed with adjoining margins
